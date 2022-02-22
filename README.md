@@ -1,5 +1,6 @@
 # SCITC_Auto_push
 # 现已重写完成，后续将会提交代码至此仓库。感谢支持💖💖💖
+# 技术交流群：<a rel="noreferrer noopener" href="https://jq.qq.com/?_wv=1027&k=2bhxYtTql" target="_blank">513816686</a>
 SCITC_Auto_Health_information的重写修复版本
 
 <!-- wp:pullquote -->
