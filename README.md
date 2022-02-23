@@ -8,7 +8,7 @@ SCITC_Auto_Health_information的重写修复版本
 <!-- /wp:pullquote -->
 
 <!-- wp:list -->
-<ul><li>作者：Sunshine</li><li>微信公众号：木羽实验室</li><li>Sunshine Blog：https://muyu.fun/ （博客暂时关闭）</li><li>声明：本项目仅供学习交流严禁使用于任何商业用途！</li>
+<ul><li>作者：Sunshine</li><li>微信公众号：木羽实验室</li><li>Sunshine Blog：https://muyu.fun/</li><li>声明：本项目仅供学习交流严禁使用于任何商业用途！</li>
 </ul>
 
 <!-- /wp:list -->
