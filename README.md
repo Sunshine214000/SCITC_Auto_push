@@ -33,7 +33,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:list -->
-<ul><li>阿里云盘：</li><li>GitHub：<a href="https://github.com/Sunshine214000/SCITC_Auto_push">Sunshine214000/SCITC_Auto_push: SCITC_Auto_Health_information的重写修复版本 (github.com)</a></li></ul>
+<ul><li>阿里云盘：<a href="https://www.aliyundrive.com/s/KstcVgUZfqN" target="_blank" rel="noreferrer noopener">https://www.aliyundrive.com/s/KstcVgUZfqN</a> 提取码：zy54</li><li>GitHub：<a href="https://github.com/Sunshine214000/SCITC_Auto_push">Sunshine214000/SCITC_Auto_push: SCITC_Auto_Health_information的重写修复版本 (github.com)</a></li></ul>
 <!-- /wp:list -->
 
 <!-- wp:heading {"level":3} -->
