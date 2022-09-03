@@ -4,12 +4,10 @@
 ###############################################################################
 users:
   - user:
-    username: "" # 备注信息
-    code: "" # 智慧川信code
+    username: "木羽" # 备注信息
+    code: "" # 智慧川信临时code
     Cookie: ""
-    Temperature: "" # 体温
-    InSchool: "在校"
-    GoOutYN: "在广元"
-    lat: '32.418995' # 维度
-    lon: '105.88456' # 经度
-    qq_gid: "" # 推送的qq群号
+    InSchool: "不在校"
+    GoOutYN: "不在广元，在省内"
+    lat: '' # 维度
+    lon: '' # 经度
