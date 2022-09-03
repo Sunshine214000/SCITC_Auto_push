@@ -1,40 +1,23 @@
 # -*- coding:utf-8 -*-
 """
-@author: Sunshine
+@author: Lee.poch
 @file:Auto_push_main.py
 @software:PyCharm
-@time:2022/04/01
+@time:2022/09/03 
 """
 import requests
 import yaml
 import time
 from bs4 import BeautifulSoup
+from cqhttp import CQHttp
 import schedule
-import socket
 
-def send_msg(resp_dict):
 
-    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    host = '' #推送go-cqhttp服务器主机地址
-    client.connect((host, 5700))  # 端口
-
-    msg_type = resp_dict['msg_type']
-    number = resp_dict['number']
-    msg = resp_dict['msg']
-    msg = msg.replace(" ", "%20")
-    msg = msg.replace("\n", "%0a")
-
-    if msg_type == 'group':
-        payload = "GET /send_group_msg?group_id=" + str(
-            number) + "&message=" + msg + " HTTP/1.1\r\nHost:" + host + "\r\nConnection: close\r\n\r\n"
-    elif msg_type == 'private':
-        payload = "GET /send_private_msg?user_id=" + str(
-            number) + "&message=" + msg + " HTTP/1.1\r\nHost:" + host + ":\r\nConnection: close\r\n\r\n"
-    print("发送" + payload)
-    client.send(payload.encode("utf-8"))
-    client.close()
-    return 0
+def send_msg(str):
+    bot = CQHttp(api_root='http://xxxx:5700/') # go-cqhttp 监听地址
+    QQ = '' # 接受推送QQ号
+    bot.send_private_msg(user_id=QQ, message='Time:' + time.strftime(
+        "%Y-%m-%d %H:%M:%S", time.localtime()) + '\n' + 'Info:' + '\n' + f'{str}')
 
 
 def loadYml(ymlFileName='config.yml'):
@@ -45,12 +28,12 @@ def loadYml(ymlFileName='config.yml'):
 
 def log(log):
     Time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-    print(f"{Time}" + "\t" +f"|||{log}|||")
+    print(f"{Time}" + "\t" + f"|||{log}|||")
     log = None
 
 
 def sign(user):
-    url_flusheh = 'http://zhcx.scitc.com.cn/weixin/getSuzhiScore.php'   #可替换为其他API
+    url_flusheh = 'http://zhcx.scitc.com.cn/weixin/UpdateUserInfor.php'
     url_get = f"http://zhcx.scitc.com.cn/weixin/HealthAdd.php?code={user['code']}&state=123"
     url_post = 'http://zhcx.scitc.com.cn/weixin/HealthAdd.php'
     header_flusheh = {
@@ -67,20 +50,23 @@ def sign(user):
     }
     header_get = header_flusheh
     header_post = header_flusheh
+
     def flusheh():
+        resp_flusheh = requests.get(url_flusheh, headers=header_flusheh)
+        html_flusheh = resp_flusheh.text
+        soup_flusheh = BeautifulSoup(html_flusheh, 'html.parser')
         try:
-            resp_flusheh = requests.get(url_flusheh, headers=header_flusheh)
-            log("保持存活ing")
-            html_flusheh = resp_flusheh.text
-            # soup_flusheh = BeautifulSoup(html_flusheh, 'html.parser')
-            # ation = soup_flusheh.find('h4')
-            log(html_flusheh)
-            # resp_dict = {'msg_type': 'private', 'number': 此处填写QQ号, 'msg': '用户信息存活'}
-            # send_msg(resp_dict)
+            ation = soup_flusheh.find_all(
+                'div', {'class': 'weui-cell my-weui-cell'})[0]
+            log(ation)
+            # send_msg('用户Cookie存活')
         except:
-            send_msg({'msg_type': 'group', 'number': user['qq_gid'], 'msg': '用户信息过期'})
+            log("用户信息获取失败")
+            send_msg('用户Cookie过期')
 
     def submit():
+        str_msg = "智慧川信提醒:" + "\n" + '用户名：' + user['username'] + '\n'
+
         def get_value():
             resp_get = requests.get(url_get, headers=header_get)
             html = resp_get.text
@@ -89,9 +75,12 @@ def sign(user):
             token = "NULL"
             demo = "NULL"
             demo_id = "NULL"
-            token = soup.find('input', id='token')["value"]
-            demo = soup.find_all('input', type="hidden")[1]["value"]
-            demo_id = soup.find_all('input', type="hidden")[1]["id"]
+            try:
+                token = soup.find('input', id='token')["value"]
+                demo = soup.find_all('input', type="hidden")[1]["value"]
+                demo_id = soup.find_all('input', type="hidden")[1]["id"]
+            except:
+                send_msg(str_msg + "页面获取失败")
             return token, demo, demo_id
 
         parameter = get_value()
@@ -100,12 +89,13 @@ def sign(user):
             'token': parameter[0],
             'InSchoolYN': user['InSchool'],
             'GoOutYN': user['GoOutYN'],
-            'Temperature': user['Temperature'],
+            'Temperature': '36.6',
             'Info': '',
             'HealthAction': '正常　',
             'HealthMa': '绿码',
-            'YiMiao_JiaQiang_YN':'null',
+            'YiMiao_JiaQiang_YN': 'null',
             'Other': '',
+            'LoadTimes': '811',
             'latitude': user['lat'],
             'longitude': user['lon'],
             'speed': '0.0',
@@ -117,18 +107,20 @@ def sign(user):
             parameter[2]: parameter[1]
         }
         print(IncomingValue)
-        resp_post = requests.post(url_post, data=IncomingValue, headers=header_post, timeout=5)
-        str_msg = "智慧川信提醒:" + "\n" + '用户名：' + user['username'] + '\n' + '日期：' + time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()) + '\n'
+        resp_post = requests.post(
+            url_post, data=IncomingValue, headers=header_post, timeout=5)
         txt = str(resp_post.text)
         str_msg = str_msg + txt[5:16]
         print(str_msg)
-        send_msg({'msg_type': 'group', 'number': user['qq_gid'], 'msg': str_msg})
+        send_msg(str_msg)
         log(resp_post.text)
-    schedule.every(20).minutes.do(flusheh)  # 保持ck存活刷新时间
-    schedule.every(1).day.at("07:00").do(submit) # 提交打卡时间
+    schedule.every(20).minutes.do(flusheh)
+    # schedule.every(18).seconds.do(flusheh)
+    schedule.every(1).day.at("07:00").do(submit)
     while True:
         schedule.run_pending()
-        time.sleep(3) # 此行代码价值百万  Ps:不加则可导致CPU占有率飙升至100％
+        time.sleep(3)
+
 
 def main():
     config = loadYml()
