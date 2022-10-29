@@ -5,7 +5,7 @@
 <!-- /wp:pullquote -->
 
 <!-- wp:list -->
-<ul><li>作者：Sunshine</li><li>微信公众号：木羽实验室</li><li>Sunshine Blog：https://muyu.fun/</li><li>声明：本项目仅供学习交流严禁使用于任何商业用途！</li></ul>
+<ul><li>作者：Sunshine</li><li>微信公众号：木羽实验室</li><li>Sunshine Blog：https://www.muyu.fun/</li><li>声明：本项目仅供学习交流严禁使用于任何商业用途！</li></ul>
 <!-- /wp:list -->
 
 <!-- wp:heading -->
