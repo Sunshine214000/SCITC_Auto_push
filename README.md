@@ -1,4 +1,4 @@
-<p># SCITC_Auto_push<br /># 现已重写完成，已提交代码至此仓库。感谢支持💖💖💖<br /># 技术交流SCITC|吹牛逼交流群：<a href="https://qm.qq.com/cgi-bin/qm/qr?k=qaRwaSma5K8xWpTFY95q9_6YI58QnABi&amp;jump_from=webapi" target="_blank" rel="noreferrer noopener">513816686</a><br />SCITC_Auto_Health_information的重写修复版本（）</p>
+<p># SCITC_Auto_push<br /># 现已重写完成，已提交代码至此仓库。感谢支持💖💖💖<br />SCITC_Auto_Health_information的重写修复版本（）</p>
 
 <!-- wp:pullquote -->
 <figure class="wp-block-pullquote"><blockquote><p>SCITC|智慧川信微信公众号健康信息自动填报</p><cite>微信公众号：木羽实验室</cite></blockquote></figure>
